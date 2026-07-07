@@ -1,0 +1,46 @@
+{
+  "name": "@dokieli/web-annotation",
+  "version": "1.0.0",
+  "description": "W3C Web Annotation implementation for creating, parsing, and serializing Web Annotations in JSON-LD, with support for HTML+RDFa embedding and DOM-based annotation application.",
+  "type": "module",
+  "packageManager": "yarn@4.17.0",
+  "author": "dokieli",
+  "license": "Apache-2.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:conformance": "vitest run tests/conformance",
+    "test:all": "vitest run && tsc --noEmit"
+  },
+  "keywords": [
+    "annotations",
+    "annotation tool",
+    "data model",
+    "json-ld",
+    "linked data",
+    "rdfa",
+    "selectors",
+    "states",
+    "text annotation",
+    "typescript",
+    "w3c",
+    "web annotation"
+  ],
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "ajv-draft-04": "^1",
+    "ajv-formats": "^3",
+    "happy-dom": "^20.8.9",
+    "rdfa-streaming-parser": "^2.0.0",
+    "typescript": "^6.0.2",
+    "vitest": "^3.0.0"
+  }
+}
