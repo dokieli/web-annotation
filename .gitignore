@@ -10,6 +10,9 @@ coverage/
 playwright-report/
 test-results/
 
+# W3C conformance suite: fetched from upstream at test time, cached here, never committed
+tests/conformance/web-annotation-tests/
+
 # Yarn (Berry) caches/state — yarn.lock & .yarnrc.yml stay tracked
 .yarn/*
 !.yarn/patches
