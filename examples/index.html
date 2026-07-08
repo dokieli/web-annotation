@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>@dokieli/web-annotation - example</title>
+    <script type="importmap">
+      { "imports": { "@dokieli/web-annotation": "/dist/index.js" } }
+    </script>
+    <style>
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+  color: #111;
+  line-height: 1.6;
+}
+h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+.subtitle { color: #555; margin-top: 0; font-size: 0.95rem; }
+.hint {
+  font-size: 0.85rem; color: #555; border-left: 3px solid #ccc;
+  padding-left: 0.75rem; margin: 1rem 0 1.5rem;
+}
+
+.controls { display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1rem; }
+label { font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 0.25rem; }
+select { padding: 0.4rem 0.6rem; border: 1px solid #ccc; border-radius: 4px; font-size: 0.9rem; font-family: inherit; }
+
+article { background: #fafafa; border: 1px solid #ddd; border-radius: 6px; padding: 1.5rem; }
+article h2 { font-size: 1.1rem; margin-top: 0; }
+article p { margin: 0.75rem 0; }
+article ::selection { background: #b3d9ff; }
+article .ref mark { background: #fff3b0; border-radius: 2px; padding: 0 1px; }
+
+.st-toolbar {
+  position: fixed; background: #1a1a1a; border-radius: 6px; padding: 5px 6px;
+  display: none; z-index: 9999; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.st-toolbar.st-active { display: block; }
+.st-actions { list-style: none; margin: 0; padding: 0; display: flex; gap: 3px; }
+.st-action-btn {
+  background: transparent; color: #fff; border: 1px solid transparent; border-radius: 4px;
+  padding: 4px 10px; cursor: pointer; font-size: 0.85rem; white-space: nowrap;
+}
+.st-action-btn:hover { background: rgba(255,255,255,0.12); }
+.st-action-btn.st-btn-active { background: #0057b8; border-color: #004a9e; }
+.st-form {
+  display: none; position: absolute; background: #fff; border: 1px solid #ccc; border-radius: 6px;
+  padding: 1rem; min-width: 280px; z-index: 10000; box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.st-form.st-form-active { display: block; }
+.st-form fieldset { border: none; margin: 0; padding: 0; }
+.st-form legend { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.75rem; }
+.st-form label { font-size: 0.82rem; color: #444; margin: 0.6rem 0 0.2rem; }
+.st-form label:first-of-type { margin-top: 0; }
+.st-form textarea, .st-form input[type=text], .st-form select {
+  display: block; width: 100%; padding: 0.4rem 0.5rem; border: 1px solid #ccc;
+  border-radius: 4px; font-size: 0.88rem; font-family: inherit;
+}
+.st-form textarea { resize: vertical; min-height: 72px; }
+.st-submit { background: #0057b8; color: #fff; border: none; border-radius: 4px; padding: 0.4rem 1rem; cursor: pointer; margin-top: 0.75rem; }
+.st-cancel { background: none; border: 1px solid #ccc; border-radius: 4px; padding: 0.4rem 0.8rem; cursor: pointer; color: #444; margin-top: 0.75rem; }
+
+.output { margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 760px) { .output { grid-template-columns: 1fr; } }
+.output-section { border: 1px solid #ddd; border-radius: 6px; overflow: hidden; }
+.output-section header {
+  background: #f0f0f0; border-bottom: 1px solid #ddd; padding: 0.4rem 0.75rem; font-size: 0.8rem;
+  font-weight: 600; color: #444; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
+}
+.output-section header .status { font-weight: normal; font-family:monospace; color: #333; font-size: 0.78rem; }
+pre { margin: 0; padding: 0.75rem; font-size: 0.78rem; overflow: auto; max-height: 320px; white-space: pre-wrap; word-break: break-word; background: #fff; }
+.empty { color: #aaa; font-style: italic; }
+
+.header-actions { display: flex; gap: 0.4rem; }
+.header-actions button {
+  font: inherit; font-size: 0.78rem; padding: 0.2rem 0.5rem; cursor: pointer;
+  border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #333;
+}
+.header-actions button:hover { background: #f0f0f0; }
+#stored details { border-bottom: 1px solid #eee; padding: 0.25rem 0; }
+#stored summary { cursor: pointer; font-size: 0.84rem; }
+#stored pre { font-size: 0.74rem; max-height: 220px; }
+#output-parse { max-height: 360px; }
+
+/* Side rendering of each annotation's comment text (the marker links here). */
+#comments .comment {
+  font-size: 0.88rem; padding: 0.5rem 0.7rem; margin: 0.5rem 0; border-radius: 4px;
+  border-left: 3px solid #ffd24d; background: #fffdf5;
+}
+#comments .comment:target { outline: 2px solid #0057b8; }
+    </style>
+  </head>
+  <body>
+    <h1>@dokieli/annotations</h1>
+    <p class="subtitle">Select text in the article, pick an action in the toolbar, and inspect the annotation.</p>
+    <p class="hint">
+      The floating toolbar is a hard-coded demo component (<code>examples/toolbar.js</code>) - it is not part of the
+      published package. Choose a <strong>selector type</strong> below to see how each one is built from the selection by
+      <code>rangeToSelectors()</code> and serialized to RDFa and W3C Web Annotation JSON-LD. The default
+      <strong>auto</strong> builds every applicable selector at once (https://www.w3.org/TR/annotation-model/#selectors : co-equal alternatives, a consumer picks
+      one). This demo stores a single selector, so under <strong>auto</strong> it marks and serializes with the first and
+      lists the rest in the object panel.
+    </p>
+
+    <div class="controls">
+      <div>
+        <label for="selector-type">Selector type</label>
+        <select id="selector-type">
+          <option value="auto">auto - all applicable selectors</option>
+          <option value="TextQuoteSelector">TextQuoteSelector</option>
+          <option value="TextPositionSelector">TextPositionSelector (start/end)</option>
+          <option value="FragmentSelector">FragmentSelector (element id -> refinedBy quote + position)</option>
+          <option value="XPathSelector">XPathSelector</option>
+          <option value="RangeSelector">RangeSelector (start/end XPath, refinedBy quote + position)</option>
+        </select>
+      </div>
+    </div>
+
+    <article id="content">
+      <h2>Web Annotations</h2>
+      <p id="p1">
+        The <cite><a href="https://www.w3.org/TR/annotation-model/">W3C Web Annotation Data Model</a></cite> provides a standard way to express annotations about resources on the web.
+        Annotations can target specific passages of text using selectors such as the TextQuoteSelector.
+      </p>
+      <p id="p2">
+        A <code>TextQuoteSelector</code> identifies a passage by its exact text content, along with a short prefix and suffix for
+        disambiguation when the same phrase appears multiple times.
+      </p>
+      <ul id="ul1">
+        <li>foo</li>
+        <li>bar</li>
+        <li>baz</li>
+      </ul>
+      <p id="p3">
+        Annotations can be stored in personal data pods, ActivityStreams outboxes, or external annotation services -
+        and retrieved later to reconstruct the highlighted passages.
+      </p>
+    </article>
+
+    <div class="output">
+      <div class="output-section">
+        <header>
+          Annotation object (JSON)
+          <span class="status" id="status-object">-</span>
+        </header>
+        <pre id="output-object"><span class="empty">Select text and annotate to see output</span></pre>
+      </div>
+      <div class="output-section">
+        <header>
+          <span>
+            Serialized
+            <select id="output-format" style="margin-left:0.4rem">
+              <option value="rdfa">RDFa (HTML)</option>
+              <option value="jsonld">JSON-LD (W3C WA)</option>
+            </select>
+          </span>
+          <span class="status" id="status-serialized">-</span>
+        </header>
+        <pre id="output-serialized"><span class="empty">Select text and annotate to see output</span></pre>
+      </div>
+    </div>
+
+    <div class="output-section" style="margin-top:1rem">
+      <header>Comments <span class="status">click a 💬 marker in the text to jump to its note</span></header>
+      <div id="comments" style="padding:0.75rem"><span class="empty">Annotate with a comment to render it here</span></div>
+    </div>
+
+    <div class="output-section" style="margin-top:1rem">
+      <header>
+        <span>Stored annotations <span class="status" id="status-stored">none yet</span></span>
+        <span class="header-actions">
+          <button type="button" id="btn-rerender">Re-render from stored selectors</button>
+          <button type="button" id="btn-unwrap">Parse last as as:Create wrapper</button>
+        </span>
+      </header>
+      <div id="stored" style="padding:0.75rem"><span class="empty">Create an annotation to populate this list</span></div>
+    </div>
+
+    <div class="output-section" style="margin-top:1rem">
+      <header>Parse / unwrap debug <span class="status">wraps the last annotation in an as:Create and re-parses it</span></header>
+      <pre id="output-parse"><span class="empty">Use “Parse last as as:Create wrapper” above</span></pre>
+    </div>
+
+    <script type="module">
+import {
+  serializeAnnotation, serializeAnnotationToJSONLD, parseStoredAnnotation,
+  applyMark, applyMarkFromSelector, rangeToSelectors,
+} from '@dokieli/annotations'
+import { SelectionToolbar } from './toolbar.js'
+
+const IGNORE_SELECTOR = 'sup'
+
+const article = document.getElementById('content')
+const originalArticleHTML = article.innerHTML
+const stored = []
+const outputObject = document.getElementById('output-object')
+const outputSerialized = document.getElementById('output-serialized')
+const statusObject = document.getElementById('status-object')
+const statusSerialized = document.getElementById('status-serialized')
+const commentsEl = document.getElementById('comments')
+
+let lastAnnotation = null
+
+function renderSideComment(noteId, text) {
+  const empty = commentsEl.querySelector('.empty')
+  if (empty) empty.remove()
+  let el = document.getElementById(noteId)
+  if (!el) {
+    el = document.createElement('div')
+    el.id = noteId
+    el.className = 'comment'
+    commentsEl.appendChild(el)
+  }
+  el.textContent = text || '(no comment text)'
+}
+
+function renderSerialized() {
+  if (!lastAnnotation) return
+  const format = document.getElementById('output-format').value
+  const out = serializeAnnotation(lastAnnotation, {
+    format,
+    licenses: { 'https://creativecommons.org/licenses/by/4.0/': { name: 'CC BY 4.0' } },
+  })
+  const text = (format === 'jsonld') ? JSON.stringify(out, null, 2) : out
+  outputSerialized.textContent = text
+  statusSerialized.textContent = `${format} · ${text.length} chars`
+}
+document.getElementById('output-format').addEventListener('change', renderSerialized)
+
+const toolbar = new SelectionToolbar({
+  container: article,
+  actions: ['comment', 'highlight', 'bookmark', 'approve', 'disapprove', 'specificity'],
+  creator: { iri: 'https://alice.example/#me', name: 'Alice', url: 'https://alice.example/' },
+  excludeSelector: '.ref',
+  onAnnotate: ({ annotation, range }) => {
+    const selectorType = document.getElementById('selector-type').value
+    const result = range ? rangeToSelectors(range, { container: article, selectorType, ignoreSelector: IGNORE_SELECTOR }) : null
+    const selectors = result?.selectors ?? []
+
+    if (selectors.length) annotation.target.selector = selectors[0]
+    if (result?.state) annotation.target.state = result.state
+
+    const annotationUrl = `https://annotations.example/${annotation.id}` // PLACEHOLDER
+
+    const noteId = `note-${annotation.id}`
+    const commentText = annotation.body?.[0]?.value ?? ''
+    renderSideComment(noteId, commentText)
+    const reference = `<sup class="ref-annotation"><a href="#${noteId}" title="Go to comment">💬</a></sup>`
+
+    const markOptions = { annotationUrl, className: 'ref', reference, ignoreSelector: IGNORE_SELECTOR }
+    if (annotation.target.selector) {
+      applyMarkFromSelector(article, annotation.target.selector, markOptions)
+    } else if (range) {
+      applyMark(range, markOptions)
+    }
+
+    stored.push({ annotation, annotationUrl, reference, noteId, commentText })
+    renderStored()
+
+    lastAnnotation = annotation
+
+    if (selectorType === 'auto') {
+      const display = { ...annotation, target: { ...annotation.target, selector: selectors } }
+      outputObject.textContent = JSON.stringify(display, null, 2)
+      statusObject.textContent =
+        `auto · ${selectors.length} selectors [${selectors.map(s => s.type).join(', ')}]` +
+        ` · serialized with the first (${selectors[0]?.type ?? 'none'})`
+    } else {
+      outputObject.textContent = JSON.stringify(annotation, null, 2)
+      statusObject.textContent = `${annotation.target.selector?.type ?? 'no selector'} · id ${annotation.id.slice(0, 8)}...`
+    }
+    renderSerialized()
+  }
+})
+
+toolbar.mount()
+
+const storedEl    = document.getElementById('stored')
+const statusStored = document.getElementById('status-stored')
+const outputParse = document.getElementById('output-parse')
+
+function renderStored() {
+  if (!stored.length) return
+  storedEl.textContent = ''
+  stored.forEach((s, i) => {
+    const wrap = document.createElement('details')
+    wrap.open = i === stored.length - 1
+    const summary = document.createElement('summary')
+    const exact = s.annotation.target.selector?.exact
+      ?? s.annotation.target.selector?.refinedBy?.exact ?? '(no quote)'
+    summary.textContent = `#${i + 1} · ${s.annotation.target.selector?.type ?? 'no selector'} · "${exact}"`
+    const pre = document.createElement('pre')
+    pre.textContent = JSON.stringify(serializeAnnotationToJSONLD(s.annotation), null, 2)
+    wrap.append(summary, pre)
+    storedEl.appendChild(wrap)
+  })
+  statusStored.textContent = `${stored.length} stored`
+}
+
+document.getElementById('btn-rerender').addEventListener('click', () => {
+  article.innerHTML = originalArticleHTML
+  let ok = 0
+  stored.forEach(s => {
+    if (!s.annotation.target.selector) return
+    renderSideComment(s.noteId, s.commentText)
+    const span = applyMarkFromSelector(article, s.annotation.target.selector, {
+      annotationUrl: s.annotationUrl, className: 'ref', reference: s.reference,
+      ignoreSelector: IGNORE_SELECTOR,
+    })
+    if (span) ok++
+  })
+  statusStored.textContent = `${stored.length} stored · re-rendered ${ok}/${stored.length} resolved`
+})
+
+document.getElementById('btn-unwrap').addEventListener('click', () => {
+  const last = stored[stored.length - 1]?.annotation
+  if (!last) { outputParse.textContent = 'Create an annotation first.'; return }
+
+  const ld = serializeAnnotationToJSONLD(last)
+  const wrapperIRI = `https://inbox.example/activity-${last.id}`
+  const graph = [
+    { id: wrapperIRI, type: 'Create', object: { id: ld.id } },
+    ld,
+  ]
+  const parsed = parseStoredAnnotation(graph, wrapperIRI)
+  outputParse.textContent = JSON.stringify({
+    passedWrapperIRI: wrapperIRI,
+    annotationIRI: ld.id,
+    wrapperGraph: graph,
+    parsed: {
+      iri: parsed?.iri,
+      motivatedBy: parsed?.motivatedBy,
+      selector: parsed?.target?.selector,
+    },
+    unwrappedToAnnotation: parsed?.iri === ld.id,
+    selectorResolved: Boolean(parsed?.target?.selector),
+  }, null, 2)
+})
+    </script>
+  </body>
+</html>
