@@ -103,3 +103,14 @@ Common types: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`. Example:
 ```text
 feat(selectors): add Range Selector support
 ```
+
+## Comment Tags
+
+We follow common codetag conventions. See [PEP 350 - Codetags](https://peps.python.org/pep-0350/) for background and historical discussion.
+
+* `TODO` - Planned work or improvements.
+* `FIXME` - Known problems or broken behavior.
+* `NOTE` - Important context or explanation.
+* `HACK` - Temporary workaround or non-ideal solution.
+* `PERF` - Performance-related improvement or optimization opportunity.
+* `XXX` - Suspicious code requiring attention or review.
