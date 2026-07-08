@@ -14,7 +14,9 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -22,6 +24,8 @@
     "build": "tsc",
     "prepare": "tsc",
     "docs": "typedoc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:conformance": "vitest run tests/conformance",
     "test:all": "vitest run && tsc --noEmit"
@@ -42,8 +46,11 @@
   ],
   "devDependencies": {
     "@types/node": "^25.5.2",
+    "@typescript-eslint/parser": "^8.63.0",
     "ajv-draft-04": "^1",
     "ajv-formats": "^3",
+    "eslint": "^10.6.0",
+    "eslint-plugin-license-header": "^0.9.0",
     "happy-dom": "^20.8.9",
     "rdfa-streaming-parser": "^2.0.0",
     "typedoc": "^0.28.20",
