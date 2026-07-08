@@ -14,8 +14,14 @@
       "import": "./dist/index.js"
     }
   },
+  "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
+    "prepare": "tsc",
+    "docs": "typedoc",
     "test": "vitest run",
     "test:conformance": "vitest run tests/conformance",
     "test:all": "vitest run && tsc --noEmit"
@@ -40,6 +46,7 @@
     "ajv-formats": "^3",
     "happy-dom": "^20.8.9",
     "rdfa-streaming-parser": "^2.0.0",
+    "typedoc": "^0.28.20",
     "typescript": "^6.0.2",
     "vitest": "^3.0.0"
   }
