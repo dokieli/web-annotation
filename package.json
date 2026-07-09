@@ -1,6 +1,6 @@
 {
   "name": "@dokieli/web-annotation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "W3C Web Annotation implementation for creating, parsing, and serializing Web Annotations in JSON-LD, with support for HTML+RDFa embedding and DOM-based annotation application.",
   "type": "module",
   "packageManager": "yarn@4.17.0",
