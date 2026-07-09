@@ -117,6 +117,11 @@ const DEFAULT_LABELS: AnnotationLabels = {
   partOf: 'part of',
   selector: 'Selector',
   refinedBy: 'Refined by',
+  refinedByTextQuote: 'Refined by (text quote)',
+  refinedByTextPosition: 'Refined by (text position)',
+  refinedByXPath: 'Refined by (xpath)',
+  refinedByFragment: 'Refined by (fragment)',
+  refinedByRange: 'Refined by (range)',
   startSelector: 'Start selector',
   endSelector: 'End selector',
   fragmentConformsTo: 'Fragment selector conforms to',
@@ -167,7 +172,14 @@ function selectorToHTML(
   { rel, language = '', labels }: { rel: string; language?: string; labels: AnnotationLabels }
 ): string {
   const resource = `#${selector.id ?? generateId()}`
-  const dtLabel = rel === 'oa:refinedBy' ? labels.refinedBy
+  const refinedByLabel: Partial<Record<Selector['type'], string>> = {
+    TextQuoteSelector:    labels.refinedByTextQuote,
+    TextPositionSelector: labels.refinedByTextPosition,
+    XPathSelector:        labels.refinedByXPath,
+    FragmentSelector:     labels.refinedByFragment,
+    RangeSelector:        labels.refinedByRange,
+  }
+  const dtLabel = rel === 'oa:refinedBy' ? (refinedByLabel[selector.type] ?? labels.refinedBy)
     : rel === 'oa:hasStartSelector' ? labels.startSelector
     : rel === 'oa:hasEndSelector' ? labels.endSelector
     : labels.selector
@@ -216,8 +228,8 @@ function selectorToHTML(
         `<dl class="conformsto">`,
         `<dt>${labels.fragmentConformsTo}</dt>`,
         `<dd><a content="${htmlEncode(selector.value)}" lang="" property="rdf:value" rel="dcterms:conformsTo" href="${conformsTo}" xml:lang="" datatype="xsd:string">${conformsLabel}</a></dd>`,
+        refinedBy ? `<dd>${refinedBy}</dd>` : '',
         `</dl>`,
-        refinedBy,
         `</div>`,
       ].join('')
     }
@@ -228,8 +240,8 @@ function selectorToHTML(
         `<dl>`,
         `<dt>${dtLabel}</dt>`,
         `<dd><code property="rdf:value">${htmlEncode(selector.value)}</code></dd>`,
+        refinedBy ? `<dd>${refinedBy}</dd>` : '',
         `</dl>`,
-        refinedBy,
         `</div>`,
       ].join('')
 

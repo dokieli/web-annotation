@@ -230,6 +230,11 @@ export interface AnnotationLabels {
   partOf: string
   selector: string
   refinedBy: string
+  refinedByTextQuote: string
+  refinedByTextPosition: string
+  refinedByXPath: string
+  refinedByFragment: string
+  refinedByRange: string
   startSelector: string
   endSelector: string
   fragmentConformsTo: string
