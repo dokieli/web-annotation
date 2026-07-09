@@ -4,7 +4,7 @@ W3C Web Annotation implementation for creating, parsing, and serializing Web Ann
 
 * [Code of Conduct](CODE-OF-CONDUCT.md)
 * [Contributing Guide](CONTRIBUTING.md)
-* [API Reference](docs.md)
+* [API Reference](https://dokieli.github.io/web-annotation/)
 * [Security Policy](SECURITY.md)
 
 ## License
@@ -39,7 +39,7 @@ const html = serializeAnnotationToHTML(annotation);
 
 ## Documentation
 
-See [API Reference](docs.md) and [Examples](examples/).
+See [API Reference](https://dokieli.github.io/web-annotation/) and [Examples](examples/).
 
 ## Features
 

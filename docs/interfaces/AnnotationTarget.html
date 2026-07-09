@@ -12,7 +12,7 @@
 <h1>Interface AnnotationTarget</h1></div>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">AnnotationTarget</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#iri">iri</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#language">language</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#rel">rel</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#renderedvia">renderedVia</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">iri</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#selector">selector</a><span class="tsd-signature-symbol">?:</span> <a href="../types/Selector.html" class="tsd-signature-type tsd-kind-type-alias">Selector</a><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#source">source</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#state">state</a><span class="tsd-signature-symbol">?:</span> <a href="../types/State.html" class="tsd-signature-type tsd-kind-type-alias">State</a> <span class="tsd-signature-symbol">|</span> <a href="../types/State.html" class="tsd-signature-type tsd-kind-type-alias">State</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/39104a7e92862a7d28e97a0ff8d0cd72167c9f38/src/types.ts#L118">types.ts:118</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/cd2c37b23979425cfa174077c72d6cca32680540/src/types.ts#L135">types.ts:135</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -37,49 +37,49 @@
 <div class="tsd-comment tsd-typography"><p>IRI of the targeted section (with fragment)</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/39104a7e92862a7d28e97a0ff8d0cd72167c9f38/src/types.ts#L120">types.ts:120</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/cd2c37b23979425cfa174077c72d6cca32680540/src/types.ts#L137">types.ts:137</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="language"><code class="tsd-tag">Optional</code><span>language</span><a href="#language" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">language</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Language of the target resource</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/39104a7e92862a7d28e97a0ff8d0cd72167c9f38/src/types.ts#L128">types.ts:128</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/cd2c37b23979425cfa174077c72d6cca32680540/src/types.ts#L145">types.ts:145</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="rel"><code class="tsd-tag">Optional</code><span>rel</span><a href="#rel" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">rel</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>RDFa relation for the rendered target link (defaults to <code>oa:hasTarget</code>; e.g. <code>as:inReplyTo</code> for replies)</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/39104a7e92862a7d28e97a0ff8d0cd72167c9f38/src/types.ts#L130">types.ts:130</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/cd2c37b23979425cfa174077c72d6cca32680540/src/types.ts#L147">types.ts:147</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="renderedvia"><code class="tsd-tag">Optional</code><span>rendered<wbr/>Via</span><a href="#renderedvia" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">renderedVia</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">iri</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span></div>
 <div class="tsd-comment tsd-typography"><p>Tool that rendered the target at annotation time; name is display-only</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/39104a7e92862a7d28e97a0ff8d0cd72167c9f38/src/types.ts#L132">types.ts:132</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/cd2c37b23979425cfa174077c72d6cca32680540/src/types.ts#L149">types.ts:149</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="selector"><code class="tsd-tag">Optional</code><span>selector</span><a href="#selector" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">selector</span><span class="tsd-signature-symbol">?:</span> <a href="../types/Selector.html" class="tsd-signature-type tsd-kind-type-alias">Selector</a></div>
 <div class="tsd-comment tsd-typography"><p>Any selector (see Selectors above)</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/39104a7e92862a7d28e97a0ff8d0cd72167c9f38/src/types.ts#L124">types.ts:124</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/cd2c37b23979425cfa174077c72d6cca32680540/src/types.ts#L141">types.ts:141</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="source"><span>source</span><a href="#source" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">source</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>IRI of the source document (without fragment)</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/39104a7e92862a7d28e97a0ff8d0cd72167c9f38/src/types.ts#L122">types.ts:122</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/cd2c37b23979425cfa174077c72d6cca32680540/src/types.ts#L139">types.ts:139</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="state"><code class="tsd-tag">Optional</code><span>state</span><a href="#state" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">state</span><span class="tsd-signature-symbol">?:</span> <a href="../types/State.html" class="tsd-signature-type tsd-kind-type-alias">State</a> <span class="tsd-signature-symbol">|</span> <a href="../types/State.html" class="tsd-signature-type tsd-kind-type-alias">State</a><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Optional time/HTTP-request state(s)</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/39104a7e92862a7d28e97a0ff8d0cd72167c9f38/src/types.ts#L126">types.ts:126</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/dokieli/web-annotation/blob/cd2c37b23979425cfa174077c72d6cca32680540/src/types.ts#L143">types.ts:143</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
