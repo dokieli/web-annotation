@@ -6,6 +6,12 @@
   "packageManager": "yarn@4.17.0",
   "author": "dokieli",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dokieli/web-annotation.git"
+  },
+  "homepage": "https://dokieli.github.io/web-annotation/",
+  "bugs": "https://github.com/dokieli/web-annotation/issues",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
